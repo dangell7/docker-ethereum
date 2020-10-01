@@ -1,0 +1,276 @@
+# POSTGRES CONFIG
+# gcloud compute disks create --size 200GB postgres-disk
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dashboard-config
+data:
+  WS_SECRET: 'eth-net-stats-secret'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node1
+  labels:
+    app: ethereum
+    tier: backend1
+spec:
+  type: NodePort
+  ports:
+  - port: 8501
+    targetPort: 8501
+  selector:
+    app: ethereum
+    tier: backend1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node1-public
+  labels:
+    app: ethereum
+    tier: backend1
+spec:
+  type: NodePort
+  ports:
+  - port: 30311
+    targetPort: 30311
+  selector:
+    app: ethereum
+    tier: backend1
+---
+# ethereum DEPLOY
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node1-deployment
+  labels:
+    app: ethereum
+    tier: backend1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ethereum
+      tier: backend1
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        tier: backend1
+    spec:
+      containers:
+      - name: geth-node1
+        image: gcr.io/gambit-prod-ha/node1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 30311
+        command: [
+          "geth",
+          "--datadir", "/root/ethereum",
+          "--syncmode", "full",
+          "--port", "30311",
+          "--rpc",
+          "--rpcaddr", "0.0.0.0",
+          "--rpcport", "8501",
+          "--rpccorsdomain", "*",
+          "--rpcvhosts", "*",
+          "--rpcvhosts", "*",
+          "--rpcapi", "eth,web3,personal,net",
+          "--ws",
+          "--wsaddr", "0.0.0.0",
+          "--wsapi", "eth,web3,personal,net",
+          "--wsorigins", "*",
+          "--networkid", "32414",
+          "--gasprice", "0",
+          "--unlock", "0",
+          "--password", "password.txt",
+          "--mine",
+          "--allow-insecure-unlock",
+          "--nodiscover"
+        ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node2
+  labels:
+    app: ethereum
+    tier: backend2
+spec:
+  type: NodePort
+  ports:
+  - port: 30312
+    targetPort: 30312
+  selector:
+    app: ethereum
+    tier: backend2
+---
+# ethereum DEPLOY
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node2-deployment
+  labels:
+    app: ethereum
+    tier: backend2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ethereum
+      tier: backend2
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        tier: backend2
+    spec:
+      containers:
+      - name: geth-node2
+        image: gcr.io/gambit-prod-ha/node2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 30312
+        command: [
+          "geth",
+          "--datadir", "/root/ethereum",
+          "--syncmode", "full",
+          "--port", "30312",
+          "--rpc",
+          "--rpcaddr", "0.0.0.0",
+          "--rpcport", "8502",
+          "--rpccorsdomain", "*",
+          "--rpcvhosts", "*",
+          "--rpcvhosts", "*",
+          "--rpcapi", "eth,web3,personal,net",
+          "--ws",
+          "--wsaddr", "0.0.0.0",
+          "--wsapi", "eth,web3,personal,net",
+          "--wsorigins", "*",
+          "--networkid", "32414",
+          "--gasprice", "0",
+          "--unlock", "0",
+          "--password", "password.txt",
+          "--mine",
+          "--allow-insecure-unlock",
+          "--nodiscover"
+        ]
+---
+# ethereum DEPLOY
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ethnet-deployment
+  labels:
+    app: ethereum
+    tier: backend3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ethereum
+      tier: backend3
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        tier: backend3
+    spec:
+      containers:
+      - name: ethnet
+        image: gcr.io/gambit-prod-ha/ethnet
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dashboard
+  labels:
+    app: ethereum
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: ethereum
+    tier: frontend
+---
+# API DEPLOY
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dashboard-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: ethereum
+        tier: frontend
+  template:
+    metadata:
+      labels:
+        app: ethereum
+        tier: frontend
+    spec:
+      containers:
+      - name: dashboard
+        image: gcr.io/gambit-prod-ha/dashboard
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        envFrom:
+        - configMapRef:
+            name: dashboard-config
+---
+# HARPANGELL INGRESS
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: harpangell-ingress
+  annotations:
+    networking.gke.io/managed-certificates: harpangell-cert
+    kubernetes.io/ingress.global-static-ip-name: harpangell-ip
+spec:
+  tls:
+  - hosts:
+    - harpangell.com
+  backend:
+    serviceName: dashboard
+    servicePort: 3000
+---
+apiVersion: networking.gke.io/v1beta2
+kind: ManagedCertificate
+metadata:
+  name: harpangell-cert
+spec:
+  domains:
+    - harpangell.com
+---
+# ETHEREUM INGRESS
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ethereum-ingress
+  annotations:
+    networking.gke.io/managed-certificates: ethereum-cert
+    kubernetes.io/ingress.global-static-ip-name: ethereum-ip
+spec:
+  tls:
+  - hosts:
+    - ropsten.harpangell.com
+  backend:
+    serviceName: node1
+    servicePort: 8501
+---
+apiVersion: networking.gke.io/v1beta2
+kind: ManagedCertificate
+metadata:
+  name: ethereum-cert
+spec:
+  domains:
+    - harpangell.com
+---

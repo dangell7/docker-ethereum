@@ -24,8 +24,8 @@ This will create a private Ethereum network composed of 2 nodes.
 
 #### Get Enode Id
 ```
-$ docker logs geth_node1 2>&1 | grep "enode:"
-$ docker logs geth_node2 2>&1 | grep "enode:"
+$ docker logs geth-node1 2>&1 | grep "enode:"
+$ docker logs geth-node2 2>&1 | grep "enode:"
 ```
 
 Each node won't be persisting data on disk. If you need to, uncomment the section in the docker-compose.yml

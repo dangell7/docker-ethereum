@@ -8,4 +8,4 @@ COPY geth /root/ethereum/geth
 
 ENTRYPOINT []
 
-EXPOSE 8501 30311 30311/udp
+EXPOSE 8502 30312 30312/udp

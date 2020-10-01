@@ -11,7 +11,7 @@
     "env":
     {
       "NODE_ENV"        : "production",
-      "RPC_HOST"        : "geth_node1",
+      "RPC_HOST"        : "node1",
       "RPC_PORT"        : "8501",
       "LISTENING_PORT"  : "30311",
       "INSTANCE_NAME"   : "XXX",

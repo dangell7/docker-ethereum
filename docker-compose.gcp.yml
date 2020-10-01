@@ -1,0 +1,17 @@
+##
+# docker-compose.gcp.yml
+#
+# Usage:
+#   export DOCKER_IMAGE_TAG=$(git rev-parse --short HEAD)
+#   docker-compose -f docker-compose.yml -f docker-compose.gcp.yml
+##
+version: '3.4'
+services:
+ node1:
+   image: gcr.io/gambit-prod-ha/node1
+ node2:
+   image: gcr.io/gambit-prod-ha/node2
+ dashboard:
+   image: gcr.io/gambit-prod-ha/dashboard
+ ethnet:
+   image: gcr.io/gambit-prod-ha/ethnet

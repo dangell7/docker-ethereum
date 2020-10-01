@@ -1,0 +1,24 @@
+# cloudbuild.yaml
+steps:
+# PREPARE
+- name: gcr.io/cloud-builders/gke-deploy
+  id: Prepare
+  args:
+    - prepare
+    - '--filename=clouddeploy.yaml'
+    - '--image=gcr.io/gambit-prod-ha/dashboard'
+    - '--app=dashboard'
+    - '--version=latest'
+    - '--namespace=default'
+    - '--output=output'
+- name: gcr.io/cloud-builders/gke-deploy
+  id: Deploy
+  args:
+    - apply
+    - '--filename=output/expanded'
+    - '--cluster=gambit-cluster'
+    - '--location=us-central1-c'
+    - '--namespace=default'
+tags:
+  - gcp-cloud-build-deploy
+  - dashboard

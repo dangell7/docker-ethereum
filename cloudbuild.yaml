@@ -22,3 +22,4 @@ steps:
 tags:
   - gcp-cloud-build-deploy
   - dashboard
+timeout: 900s

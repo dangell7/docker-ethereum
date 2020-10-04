@@ -13,14 +13,14 @@ Documentation: https://cloud.google.com/sdk/docs/
 gcloud config set account YOUR_EMAIL_ADDRESS \
 && gcloud config set project YOUR_PROJECT_ID \
 && gcloud config set compute/zone us-west1-a \
-&& gcloud config set container/cluster payid-cluster \
-&& gcloud container clusters get-credentials payid-cluster \
+&& gcloud config set container/cluster ethereum-cluster \
+&& gcloud container clusters get-credentials ethereum-cluster \
 ```
 
 ### Create Pay ID Cluster
 
 ```
-gcloud beta container clusters create "payid-cluster" \
+gcloud beta container clusters create "ethereum-cluster" \
   --project "gambit-prod-ha" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
@@ -49,11 +49,11 @@ gcloud beta container clusters create "payid-cluster" \
 
 ### Create Persistant Disk
 
-`gcloud compute disks create --size 10GB postgres-disk`
+`gcloud compute disks create --size 100GB ethereum-disk`
 
 ### Add Static IP Address
 
-`gcloud compute addresses create payid-ip --global`
+`gcloud compute addresses create ethereum-ip --global`
 
 ### Create IAM Policies... ??
 

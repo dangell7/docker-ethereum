@@ -17,7 +17,7 @@ gcloud config set account YOUR_EMAIL_ADDRESS \
 && gcloud container clusters get-credentials ethereum-cluster \
 ```
 
-### Create Pay ID Cluster
+### Create Ethereum Cluster
 
 ```
 gcloud beta container clusters create "ethereum-cluster" \

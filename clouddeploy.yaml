@@ -23,22 +23,22 @@ spec:
     app: node1-deployment
     tier: backend1
 ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: node1-public
-#   labels:
-#     app: ethereum
-#     tier: backend1
-# spec:
-#   type: NodePort
-#   ports:
-#   - port: 30311
-#     targetPort: 30311
-#   selector:
-#     app: ethereum
-#     tier: backend1
-# ---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node1-public
+  labels:
+    app: ethereum
+    tier: backend1
+spec:
+  type: NodePort
+  ports:
+  - port: 30311
+    targetPort: 30311
+  selector:
+    app: ethereum
+    tier: backend1
+---
 # ethereum DEPLOY
 apiVersion: apps/v1
 kind: Deployment
@@ -76,7 +76,7 @@ spec:
           "--rpc",
           "--rpcaddr", "0.0.0.0",
           "--rpcport", "8501",
-          "--rpccorsdomain", "*",
+          "--rpccorsdomain", "harpangell.com",
           "--rpcvhosts", "*",
           "--rpcvhosts", "*",
           "--rpcapi", "eth,web3,personal,net",
@@ -102,6 +102,22 @@ apiVersion: v1
 kind: Service
 metadata:
   name: node2
+  labels:
+    app: node1-deployment
+    tier: backend2
+spec:
+  type: NodePort
+  ports:
+  - port: 8502
+    targetPort: 8502
+  selector:
+    app: node2-deployment
+    tier: backend2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: node2-public
   labels:
     app: node2-deployment
     tier: backend2
@@ -151,7 +167,7 @@ spec:
           "--rpc",
           "--rpcaddr", "0.0.0.0",
           "--rpcport", "8502",
-          "--rpccorsdomain", "*",
+          "--rpccorsdomain", "harpangell.com",
           "--rpcvhosts", "*",
           "--rpcvhosts", "*",
           "--rpcapi", "eth,web3,personal,net",
@@ -172,99 +188,99 @@ spec:
       #   gcePersistentDisk:
       #     fsType: ext4
       #     pdName: ethereum-disk
----
-# ethereum DEPLOY
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ethnet-deployment
-  labels:
-    app: ethnet-deployment
-    tier: backend3
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: ethnet-deployment
-      tier: backend3
-  template:
-    metadata:
-      labels:
-        app: ethnet-deployment
-        tier: backend3
-    spec:
-      containers:
-      - name: ethnet-deployment
-        image: gcr.io/gambit-prod-ha/ethnet
-        imagePullPolicy: Always
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: dashboard
-  labels:
-    app: dashboard-deployment
-    tier: frontend
-spec:
-  type: NodePort
-  ports:
-  - port: 3000
-    protocol: TCP
-    targetPort: 3000
-  selector:
-    app: dashboard-deployment
-    tier: frontend
----
-# API DEPLOY
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: dashboard-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-        app: dashboard-deployment
-        tier: frontend
-  template:
-    metadata:
-      labels:
-        app: dashboard-deployment
-        tier: frontend
-    spec:
-      containers:
-      - name: dashboard-deployment
-        image: gcr.io/gambit-prod-ha/dashboard
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-        envFrom:
-        - configMapRef:
-            name: dashboard-config
----
-# HARPANGELL INGRESS
-apiVersion: networking.k8s.io/v1beta1
-kind: Ingress
-metadata:
-  name: harpangell-ingress
-  annotations:
-    networking.gke.io/managed-certificates: harpangell-cert
-    kubernetes.io/ingress.global-static-ip-name: harpangell-ip
-spec:
-  tls:
-  - hosts:
-    - harpangell.com
-  backend:
-    serviceName: dashboard
-    servicePort: 3000
----
-apiVersion: networking.gke.io/v1beta2
-kind: ManagedCertificate
-metadata:
-  name: harpangell-cert
-spec:
-  domains:
-    - harpangell.com
+# ---
+# # ethereum DEPLOY
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: ethnet-deployment
+#   labels:
+#     app: ethnet-deployment
+#     tier: backend3
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: ethnet-deployment
+#       tier: backend3
+#   template:
+#     metadata:
+#       labels:
+#         app: ethnet-deployment
+#         tier: backend3
+#     spec:
+#       containers:
+#       - name: ethnet-deployment
+#         image: gcr.io/gambit-prod-ha/ethnet
+#         imagePullPolicy: Always
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: dashboard
+#   labels:
+#     app: dashboard-deployment
+#     tier: frontend
+# spec:
+#   type: NodePort
+#   ports:
+#   - port: 3000
+#     protocol: TCP
+#     targetPort: 3000
+#   selector:
+#     app: dashboard-deployment
+#     tier: frontend
+# ---
+# # API DEPLOY
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: dashboard-deployment
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#         app: dashboard-deployment
+#         tier: frontend
+#   template:
+#     metadata:
+#       labels:
+#         app: dashboard-deployment
+#         tier: frontend
+#     spec:
+#       containers:
+#       - name: dashboard-deployment
+#         image: gcr.io/gambit-prod-ha/dashboard
+#         imagePullPolicy: Always
+#         ports:
+#         - containerPort: 3000
+#         envFrom:
+#         - configMapRef:
+#             name: dashboard-config
+# ---
+# # HARPANGELL INGRESS
+# apiVersion: networking.k8s.io/v1beta1
+# kind: Ingress
+# metadata:
+#   name: harpangell-ingress
+#   annotations:
+#     networking.gke.io/managed-certificates: harpangell-cert
+#     kubernetes.io/ingress.global-static-ip-name: harpangell-ip
+# spec:
+#   tls:
+#   - hosts:
+#     - harpangell.com
+#   backend:
+#     serviceName: dashboard
+#     servicePort: 3000
+# ---
+# apiVersion: networking.gke.io/v1beta2
+# kind: ManagedCertificate
+# metadata:
+#   name: harpangell-cert
+# spec:
+#   domains:
+#     - harpangell.com
 ---
 # ETHEREUM INGRESS
 apiVersion: networking.k8s.io/v1beta1

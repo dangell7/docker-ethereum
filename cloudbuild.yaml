@@ -6,8 +6,8 @@ steps:
   args:
     - prepare
     - '--filename=clouddeploy.yaml'
-    - '--image=gcr.io/gambit-prod-ha/dashboard'
-    - '--app=dashboard'
+    - '--image=gcr.io/gambit-prod-ha/node1'
+    - '--app=node1'
     - '--version=latest'
     - '--namespace=default'
     - '--output=output'
@@ -21,5 +21,5 @@ steps:
     - '--namespace=default'
 tags:
   - gcp-cloud-build-deploy
-  - dashboard
+  - node1
 timeout: 900s

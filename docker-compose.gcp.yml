@@ -8,10 +8,10 @@
 version: '3.4'
 services:
  node1:
-   image: gcr.io/gambit-prod-ha/node1
+   image: gcr.io/harp-angell-utils/node1
  node2:
-   image: gcr.io/gambit-prod-ha/node2
+   image: gcr.io/harp-angell-utils/node2
  dashboard:
-   image: gcr.io/gambit-prod-ha/dashboard
+   image: gcr.io/harp-angell-utils/dashboard
  ethnet:
-   image: gcr.io/gambit-prod-ha/ethnet
+   image: gcr.io/harp-angell-utils/ethnet

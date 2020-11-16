@@ -10,71 +10,60 @@ Documentation: https://cloud.google.com/sdk/docs/
 
 ### Configure Google Cloud account:
 ```
-gcloud config set account YOUR_EMAIL_ADDRESS \
-&& gcloud config set project YOUR_PROJECT_ID \
-&& gcloud config set compute/zone us-west1-a \
-&& gcloud config set container/cluster ethereum-cluster \
-&& gcloud container clusters get-credentials ethereum-cluster \
+gcloud config set account denis@harpangell.com \
+&& gcloud config set project harp-angell-utils \
+&& gcloud config set compute/zone us-central1-c \
+&& gcloud config set container/cluster harpangell-cluster \
+&& gcloud container clusters get-credentials harpangell-cluster \
 ```
+
+`gcloud container clusters get-credentials harpangell-cluster --region=us-central1-c`
 
 ### Create Ethereum Cluster
 
 ```
-gcloud beta container clusters create "ethereum-cluster" \
-  --project "gambit-prod-ha" \
+gcloud beta container clusters create "harpangell-cluster" \
+  --project "harp-angell-utils" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
-  --cluster-version "1.16.13-gke.1" \
-  --release-channel "regular" \
-  --machine-type "e2-small" \
+  --cluster-version "1.16.13-gke.401" \
+  --machine-type "e2-custom-2-2048" \
   --image-type "COS" \
   --disk-type "pd-standard" \
   --disk-size "100" \
   --metadata disable-legacy-endpoints=true \
-  --scopes "https://www.googleapis.com/auth/devstorage.read_only","https://www.googleapis.com/auth/logging.write","https://www.googleapis.com/auth/monitoring","https://www.googleapis.com/auth/servicecontrol","https://www.googleapis.com/auth/service.management.readonly","https://www.googleapis.com/auth/trace.append" \
+  --service-account "compute-engine-default-service@harp-angell-utils.iam.gserviceaccount.com" \
   --num-nodes "1" \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
-  --network "projects/gambit-prod-ha/global/networks/default" \
-  --subnetwork "projects/gambit-prod-ha/regions/us-central1/subnetworks/default" \
+  --network "projects/harp-angell-utils/global/networks/default" \
+  --subnetwork "projects/harp-angell-utils/regions/us-central1/subnetworks/default" \
   --default-max-pods-per-node "110" \
-  --no-enable-master-authorized-networks \
+  --enable-autoscaling \
+  --min-nodes "1" \
+  --max-nodes "1" \
+  --enable-master-authorized-networks \
+  --master-authorized-networks 68.205.142.45/32 \
   --addons HorizontalPodAutoscaling,HttpLoadBalancing \
   --enable-autoupgrade \
   --enable-autorepair \
   --max-surge-upgrade 1 \
   --max-unavailable-upgrade 0 \
+  --shielded-secure-boot \
   --security-group="gke-security-groups@harpangell.com"
 ```
 
 ### Create Persistant Disk
 
-`gcloud compute disks create --size 100GB ethereum-disk`
+`gcloud compute disks create --size 100GB harpangell-disk`
 
 ### Add Static IP Address
 
-`gcloud compute addresses create ethereum-ip --global`
+`gcloud compute addresses create harpangell-ip --global`
 
-### Create IAM Policies... ??
+### Create IAM Policies
 
-`kubectl apply -f kubernetes/rbac/rbac.yml`
-
-## ERROR: inotify
-
-#### Open new cluster in command terminal -
-
-`echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
-
-#### Commit Changes
-
-`sysctl --system`
-
-
-## Deploy Execute
-
-```
-sudo chmod +x ./scripts/build-push-deploy.sh
-```
+`kubectl apply -f cloudrbac.yaml`
 
 ## Deploy Script
 
@@ -90,11 +79,15 @@ push \
 && gcloud builds submit
 ```
 
+### Create Cert & Ingress
+
+`kubectl apply -f cloudcert.yaml`
+
 ## Destroy Script:
 
 ```
 && kubectl delete -f cloudbuild.yaml \
-&& gcloud container clusters delete example \
-&& gcloud compute disks delete example-disk \
-&& gcloud compute addresses delete example-ingress-ip \
+&& gcloud container clusters delete harpangell-cluster \
+&& gcloud compute disks delete harpangell-disk \
+&& gcloud compute addresses delete harpangell-ip \
 ```

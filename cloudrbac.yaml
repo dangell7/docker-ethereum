@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-reader
+  namespace: default
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pod-reader
+  namespace: default
+rules:
+- apiGroups: [""] # "" indicates the core API group
+  resources: ["pods"]
+  verbs: ["get", "watch", "list"]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: pod-reader-binding
+  namespace: default
+subjects:
+# Google Cloud user account
+- kind: User
+  name: denis@harpangell.com
+# Kubernetes service account
+- kind: ServiceAccount
+  name: pod-reader
+# IAM service account
+- kind: User
+  name: service-330555273990@container-engine-robot.iam.gserviceaccount.com
+# G Suite Google Group
+- kind: Group
+  name: harpangell-admin@harpangell.com
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io

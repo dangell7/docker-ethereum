@@ -1,11 +1,11 @@
-apiVersion: networking.gke.io/v1beta2
-kind: ManagedCertificate
-metadata:
-  name: harpangell-cert
-spec:
-  domains:
-    - ropsten.harpangell.com
----
+# apiVersion: networking.gke.io/v1beta2
+# kind: ManagedCertificate
+# metadata:
+#   name: harpangell-cert
+# spec:
+#   domains:
+#     - ropsten.harpangell.com
+# ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:

@@ -15,9 +15,8 @@ gcloud config set account denis@harpangell.com \
 && gcloud config set compute/zone us-central1-c \
 && gcloud config set container/cluster harpangell-cluster \
 && gcloud container clusters get-credentials harpangell-cluster \
+&& gcloud auth configure-docker
 ```
-
-`gcloud container clusters get-credentials harpangell-cluster --region=us-central1-c`
 
 ### Create Ethereum Cluster
 
@@ -26,7 +25,8 @@ gcloud beta container clusters create "harpangell-cluster" \
   --project "harp-angell-utils" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
-  --cluster-version "1.16.13-gke.401" \
+  --cluster-version "1.17.12-gke.1504" \
+  --release-channel "regular" \
   --machine-type "e2-custom-2-2048" \
   --image-type "COS" \
   --disk-type "pd-standard" \

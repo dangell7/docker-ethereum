@@ -1,0 +1,17 @@
+##
+# docker-compose.gcp.yml
+#
+# Usage:
+#   export DOCKER_IMAGE_TAG=$(git rev-parse --short HEAD)
+#   docker-compose -f docker-compose.yml -f docker-compose.gcp.yml
+##
+version: '3.4'
+services:
+ node1:
+   image: registry.digitalocean.com/hautils/node1
+ node2:
+   image: registry.digitalocean.com/hautils/node2
+ dashboard:
+   image: registry.digitalocean.com/hautils/dashboard
+ ethnet:
+   image: registry.digitalocean.com/hautils/ethnet

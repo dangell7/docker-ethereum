@@ -14,6 +14,11 @@ metadata:
   labels:
     app: node1-deployment
     tier: backend1
+  # annotations:
+  #   service.beta.kubernetes.io/do-loadbalancer-certificate-id: "1234-5678-9012-3456"
+  #   service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+  #   service.beta.kubernetes.io/do-loadbalancer-hostname: "ropsten.harpangell.com"
+  #   service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
 spec:
   type: NodePort
   ports:
@@ -31,7 +36,7 @@ metadata:
     app: node1-deployment
     tier: backend1
 spec:
-  type: NodePort
+  # type: NodePort
   ports:
   - port: 30311
     targetPort: 30311
@@ -61,7 +66,7 @@ spec:
     spec:
       containers:
       - name: node1-deployment
-        image: gcr.io/harp-angell-utils/node1
+        image: registry.digitalocean.com/hautils/node1
         imagePullPolicy: Always
         ports:
         - containerPort: 30311
@@ -121,7 +126,7 @@ metadata:
     app: node2-deployment
     tier: backend2
 spec:
-  type: NodePort
+  # type: NodePort
   ports:
   - port: 30312
     targetPort: 30312
@@ -151,7 +156,7 @@ spec:
     spec:
       containers:
       - name: node2-deployment
-        image: gcr.io/harp-angell-utils/node2
+        image: registry.digitalocean.com/hautils/node2
         imagePullPolicy: Always
         ports:
         - containerPort: 30312
@@ -186,72 +191,3 @@ spec:
       #   gcePersistentDisk:
       #     fsType: ext4
       #     pdName: ethereum-disk
-# ---
-# # ethereum DEPLOY
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: ethnet-deployment
-#   labels:
-#     app: ethnet-deployment
-#     tier: backend3
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: ethnet-deployment
-#       tier: backend3
-#   template:
-#     metadata:
-#       labels:
-#         app: ethnet-deployment
-#         tier: backend3
-#     spec:
-#       containers:
-#       - name: ethnet-deployment
-#         image: gcr.io/harp-angell-utils/ethnet
-#         imagePullPolicy: Always
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: dashboard
-#   labels:
-#     app: dashboard-deployment
-#     tier: frontend
-# spec:
-#   type: NodePort
-#   ports:
-#   - port: 3000
-#     protocol: TCP
-#     targetPort: 3000
-#   selector:
-#     app: dashboard-deployment
-#     tier: frontend
-# ---
-# # API DEPLOY
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: dashboard-deployment
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#         app: dashboard-deployment
-#         tier: frontend
-#   template:
-#     metadata:
-#       labels:
-#         app: dashboard-deployment
-#         tier: frontend
-#     spec:
-#       containers:
-#       - name: dashboard-deployment
-#         image: gcr.io/harp-angell-utils/dashboard
-#         imagePullPolicy: Always
-#         ports:
-#         - containerPort: 3000
-#         envFrom:
-#         - configMapRef:
-#             name: dashboard-config

@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: harp-ingress
+  # annotations:
+    # kubernetes.io/ingress.allow-http: "false"
+    # service.beta.kubernetes.io/do-loadbalancer-certificate-id: "your-certificate-id"
+spec:
+  tls:
+  - hosts:
+    - ropsten.harpangell.com
+  rules:
+  - host: ropsten.harpangell.com
+    http:
+      paths:
+      - backend:
+          serviceName: node1-public
+          servicePort: 8501

@@ -13,15 +13,15 @@ Documentation: https://cloud.google.com/sdk/docs/
 gcloud config set account denis@harpangell.com \
 && gcloud config set project harp-angell-utils \
 && gcloud config set compute/zone us-central1-c \
-&& gcloud config set container/cluster harpangell-cluster \
-&& gcloud container clusters get-credentials harpangell-cluster \
+&& gcloud config set container/cluster ethereum-cluster \
+&& gcloud container clusters get-credentials ethereum-cluster \
 && gcloud auth configure-docker
 ```
 
 ### Create Ethereum Cluster
 
 ```
-gcloud beta container clusters create "harpangell-cluster" \
+gcloud beta container clusters create "ethereum-cluster" \
   --project "harp-angell-utils" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
@@ -82,6 +82,10 @@ push \
 ### Create Cert & Ingress
 
 `kubectl apply -f cloudcert.yaml`
+
+`kubectl create secret generic node1-ethereum-key --from-file ./nodes/node1/password.txt`
+
+`kubectl create secret generic node2-ethereum-key --from-file ./nodes/node2/password.txt`
 
 ## Destroy Script:
 

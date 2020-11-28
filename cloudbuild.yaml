@@ -16,7 +16,7 @@ steps:
   args:
     - apply
     - '--filename=output/expanded'
-    - '--cluster=harpangell-cluster'
+    - '--cluster=ethereum-cluster'
     - '--location=us-central1-c'
     - '--namespace=default'
 tags:

@@ -11,7 +11,7 @@ services:
    image: gcr.io/harp-angell-utils/node1
  node2:
    image: gcr.io/harp-angell-utils/node2
- dashboard:
-   image: gcr.io/harp-angell-utils/dashboard
- ethnet:
-   image: gcr.io/harp-angell-utils/ethnet
+ # dashboard:
+ #   image: gcr.io/harp-angell-utils/dashboard
+ # ethnet:
+ #   image: gcr.io/harp-angell-utils/ethnet

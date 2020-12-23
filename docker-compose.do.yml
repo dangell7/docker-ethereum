@@ -11,7 +11,7 @@ services:
    image: registry.digitalocean.com/hautils/node1
  node2:
    image: registry.digitalocean.com/hautils/node2
- dashboard:
-   image: registry.digitalocean.com/hautils/dashboard
- ethnet:
-   image: registry.digitalocean.com/hautils/ethnet
+ # dashboard:
+ #   image: registry.digitalocean.com/hautils/dashboard
+ # ethnet:
+ #   image: registry.digitalocean.com/hautils/ethnet

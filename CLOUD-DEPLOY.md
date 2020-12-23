@@ -25,7 +25,7 @@ gcloud beta container clusters create "ethereum-cluster" \
   --project "harp-angell-utils" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
-  --cluster-version "1.17.12-gke.1504" \
+  --cluster-version "1.17.14-gke.400" \
   --release-channel "regular" \
   --machine-type "e2-custom-2-2048" \
   --image-type "COS" \

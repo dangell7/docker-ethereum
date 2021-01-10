@@ -61,7 +61,7 @@ spec:
     spec:
       containers:
       - name: node1-deployment
-        image: gcr.io/harp-angell-utils/node1
+        image: gcr.io/utils-harpangell/node1
         imagePullPolicy: Always
         ports:
         - containerPort: 30311
@@ -151,7 +151,7 @@ spec:
     spec:
       containers:
       - name: node2-deployment
-        image: gcr.io/harp-angell-utils/node2
+        image: gcr.io/utils-harpangell/node2
         imagePullPolicy: Always
         ports:
         - containerPort: 30312
@@ -209,7 +209,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: ethnet-deployment
-#         image: gcr.io/harp-angell-utils/ethnet
+#         image: gcr.io/utils-harpangell/ethnet
 #         imagePullPolicy: Always
 # ---
 # apiVersion: v1
@@ -248,7 +248,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: dashboard-deployment
-#         image: gcr.io/harp-angell-utils/dashboard
+#         image: gcr.io/utils-harpangell/dashboard
 #         imagePullPolicy: Always
 #         ports:
 #         - containerPort: 3000

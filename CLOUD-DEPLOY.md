@@ -11,7 +11,7 @@ Documentation: https://cloud.google.com/sdk/docs/
 ### Configure Google Cloud account:
 ```
 gcloud config set account denis@harpangell.com \
-&& gcloud config set project harp-angell-utils \
+&& gcloud config set project utils-harpangell \
 && gcloud config set compute/zone us-central1-c \
 && gcloud config set container/cluster ethereum-cluster \
 && gcloud container clusters get-credentials ethereum-cluster \
@@ -22,7 +22,7 @@ gcloud config set account denis@harpangell.com \
 
 ```
 gcloud beta container clusters create "ethereum-cluster" \
-  --project "harp-angell-utils" \
+  --project "utils-harpangell" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
   --cluster-version "1.17.14-gke.400" \
@@ -32,12 +32,12 @@ gcloud beta container clusters create "ethereum-cluster" \
   --disk-type "pd-standard" \
   --disk-size "100" \
   --metadata disable-legacy-endpoints=true \
-  --service-account "compute-engine-default-service@harp-angell-utils.iam.gserviceaccount.com" \
+  --service-account "compute-engine-default-service@utils-harpangell.iam.gserviceaccount.com" \
   --num-nodes "1" \
   --enable-stackdriver-kubernetes \
   --enable-ip-alias \
-  --network "projects/harp-angell-utils/global/networks/default" \
-  --subnetwork "projects/harp-angell-utils/regions/us-central1/subnetworks/default" \
+  --network "projects/utils-harpangell/global/networks/default" \
+  --subnetwork "projects/utils-harpangell/regions/us-central1/subnetworks/default" \
   --default-max-pods-per-node "110" \
   --enable-autoscaling \
   --min-nodes "1" \

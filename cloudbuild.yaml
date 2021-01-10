@@ -6,7 +6,7 @@ steps:
   args:
     - prepare
     - '--filename=clouddeploy.yaml'
-    - '--image=gcr.io/harp-angell-utils/node1'
+    - '--image=gcr.io/utils-harpangell/node1'
     - '--app=node1'
     - '--version=latest'
     - '--namespace=default'

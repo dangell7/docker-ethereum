@@ -6,7 +6,7 @@ steps:
   args:
     - prepare
     - '--filename=clouddeploy.yaml'
-    - '--image=gcr.io/utils-harpangell/node1'
+    - '--image=gcr.io/gambit-prod-ha/node1'
     - '--app=node1'
     - '--version=latest'
     - '--namespace=default'
@@ -16,7 +16,7 @@ steps:
   args:
     - apply
     - '--filename=output/expanded'
-    - '--cluster=ethereum-cluster'
+    - '--cluster=gambit-cluster'
     - '--location=us-central1-c'
     - '--namespace=default'
 tags:

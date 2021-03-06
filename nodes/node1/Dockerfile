@@ -1,10 +1,11 @@
 FROM ethereum/client-go
 
-WORKDIR /root/ethereum
+WORKDIR /home/ethereum
 
-COPY password.txt static-nodes.json* /root/ethereum/
-COPY keystore /root/ethereum/keystore
-COPY geth /root/ethereum/geth
+# COPY static-nodes.json* /home/ethereum/
+COPY pwd /home/ethereum/pwd
+COPY keystore /home/ethereum/keystore
+COPY geth /home/ethereum/geth
 
 ENTRYPOINT []
 

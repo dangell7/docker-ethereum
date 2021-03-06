@@ -61,16 +61,21 @@ spec:
     spec:
       containers:
       - name: node1-deployment
-        image: gcr.io/utils-harpangell/node1
+        image: gcr.io/gambit-prod-ha/node1
+        # env:
+        #     - name: "NODE1_PWD"
+        #       value: "/home/pwd/password.txt"
+        # volumeMounts:
+            # - name: "node1-ethsdk"
+            #   mountPath: "/home/pwd"
+            # - name: node11-pv
+            #   mountPath: /home/ethereum1/geth
         imagePullPolicy: Always
         ports:
         - containerPort: 30311
-        # volumeMounts:
-        #     - mountPath: /root/ethereum
-        #       name: ethereumdb
         command: [
           "geth",
-          "--datadir", "/root/ethereum",
+          "--datadir", "/home/ethereum",
           "--syncmode", "full",
           "--port", "30311",
           "--rpc",
@@ -86,16 +91,18 @@ spec:
           "--networkid", "32414",
           "--gasprice", "0",
           "--unlock", "0",
-          "--password", "password.txt",
+          "--password", "pwd/password.txt",
           "--mine",
           "--allow-insecure-unlock",
           "--nodiscover"
         ]
       # volumes:
-      # - name: ethereumdb
-      #   gcePersistentDisk:
-      #     fsType: ext4
-      #     pdName: ethereum-disk
+        # - name: "node1-ethsdk"
+        #   secret:
+        #     secretName: "node1-key"
+        # - name: node11-pv
+        #   persistentVolumeClaim:
+        #     claimName: node11-claim
 ---
 apiVersion: v1
 kind: Service
@@ -151,16 +158,21 @@ spec:
     spec:
       containers:
       - name: node2-deployment
-        image: gcr.io/utils-harpangell/node2
+        image: gcr.io/gambit-prod-ha/node2
+        # env:
+        #     - name: "NODE2_PWD"
+        #       value: "/home/pwd/password.txt"
+        # volumeMounts:
+            # - name: "node2-ethsdk"
+            #   mountPath: /home/pwd
+            # - name: node22-pv
+            #   mountPath: /home/ethereum2/geth
         imagePullPolicy: Always
         ports:
         - containerPort: 30312
-        # volumeMounts:
-        #     - mountPath: /root/ethereum
-        #       name: ethereumdb
         command: [
           "geth",
-          "--datadir", "/root/ethereum",
+          "--datadir", "/home/ethereum",
           "--syncmode", "full",
           "--port", "30312",
           "--rpc",
@@ -176,16 +188,18 @@ spec:
           "--networkid", "32414",
           "--gasprice", "0",
           "--unlock", "0",
-          "--password", "password.txt",
+          "--password", "pwd/password.txt",
           "--mine",
           "--allow-insecure-unlock",
           "--nodiscover"
         ]
       # volumes:
-      # - name: ethereumdb
-      #   gcePersistentDisk:
-      #     fsType: ext4
-      #     pdName: ethereum-disk
+        # - name: "node2-ethsdk"
+        #   secret:
+        #     secretName: "node2-key"
+        # - name: node22-pv
+        #   persistentVolumeClaim:
+        #     claimName: node22-claim
 # ---
 # # ethereum DEPLOY
 # apiVersion: apps/v1
@@ -209,7 +223,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: ethnet-deployment
-#         image: gcr.io/utils-harpangell/ethnet
+#         image: gcr.io/gambit-prod-ha/ethnet
 #         imagePullPolicy: Always
 # ---
 # apiVersion: v1
@@ -248,7 +262,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: dashboard-deployment
-#         image: gcr.io/utils-harpangell/dashboard
+#         image: gcr.io/gambit-prod-ha/dashboard
 #         imagePullPolicy: Always
 #         ports:
 #         - containerPort: 3000

@@ -1,5 +1,6 @@
 version: '3.4'
-
+# --ws --wsaddr "localhost" --wsapi "eth,web3,personal,net" --wsorigins "*"
+# --gasprice 0
 services:
   # nginx:
   #   build:
@@ -21,18 +22,17 @@ services:
       - "30311:30311"
   # Uncomment if you need to persist the data on disk
     volumes:
-      # - ./nodes/node1/keystore:/root/ethereum/keystore
-      - ./nodes/node1/geth:/root/ethereum/geth
-      - ./nodes/node1/password.txt:/root/ethereum/password.txt:ro
+      - ./nodes/node1/keystore:/home/ethereum/keystore
+      - ./nodes/node1/geth:/home/ethereum/geth
+      - ./nodes/node1/pwd/password.txt:/home/ethereum/pwd/password.txt:ro
     command: >
-      geth --datadir /root/ethereum --syncmode 'full' --port 30311
+      geth --datadir /home/ethereum --syncmode 'full' --port 30311
       --rpc --rpcaddr '0.0.0.0' --rpcport 8501 --rpccorsdomain '*' --rpcvhosts '*'
       --rpcapi 'eth,web3,personal,net'
-      --ws --wsaddr "0.0.0.0" --wsapi "eth,web3,personal,net" --wsorigins "*"
       --networkid 32414
-      --gasprice '0'
       --unlock 0
-      --password password.txt
+      --miner.gasprice 0
+      --password pwd/password.txt
       --mine --allow-insecure-unlock --nodiscover
   node2:
     build:
@@ -44,18 +44,16 @@ services:
       - "30312:30312"
     # Uncomment if you need to persist the data on disk
     volumes:
-      # - ./nodes/node2/keystore:/root/ethereum/keystore
-      - ./nodes/node2/geth:/root/ethereum/geth
-      - ./nodes/node2/password.txt:/root/ethereum/password.txt:ro
+      - ./nodes/node2/keystore:/home/ethereum/keystore
+      - ./nodes/node2/geth:/home/ethereum/geth
+      - ./nodes/node2/pwd/password.txt:/home/ethereum/pwd/password.txt:ro
     command: >
-      geth --datadir /root/ethereum --syncmode 'full' --port 30312
-      --rpc --rpcaddr '0.0.0.0' --rpcport 8502 --rpccorsdomain '*' --rpcvhosts '*'
-      --rpcapi 'eth,web3,personal,net'
-      --ws --wsaddr "0.0.0.0" --wsapi "eth,web3,personal,net" --wsorigins "*"
+      geth --datadir /home/ethereum --syncmode 'full' --port 30312
+      --rpc --rpcaddr '0.0.0.0' --rpcapi 'eth,web3,personal,net' --rpcport 8502 --rpccorsdomain '*' --rpcvhosts '*'
       --networkid 32414
-      --gasprice '0'
       --unlock 0
-      --password password.txt
+      --miner.gasprice 0
+      --password pwd/password.txt
       --mine --allow-insecure-unlock --nodiscover
   # dashboard:
   #   build:

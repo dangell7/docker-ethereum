@@ -25,7 +25,7 @@ gcloud beta container clusters create "ethereum-cluster" \
   --project "utils-harpangell" \
   --zone "us-central1-c" \
   --no-enable-basic-auth \
-  --cluster-version "1.18.15-gke.1102" \
+  --cluster-version "1.18.15-gke.1501" \
   --release-channel "regular" \
   --machine-type "e2-custom-2-2048" \
   --image-type "COS_CONTAINERD" \
@@ -86,13 +86,10 @@ push \
 `kubectl apply -f cloudpv.yaml`
 
 ```
-kubectl create secret generic node1-key --from-file ./nodes/node1/pwd/password.txt
-kubectl create secret generic node1-keystore --from-file ./nodes/node1/keystore/node1.json
-```
-
-```
-kubectl create secret generic node2-key --from-file ./nodes/node2/pwd/password.txt
-kubectl create secret generic node2-keystore --from-file ./nodes/node2/keystore/node2.json
+kubectl create secret generic node1-key --from-file ./nodes/node1/pwd/password.txt \
+&& kubectl create secret generic node1-keystore --from-file ./nodes/node1/keystore/node1.json \
+&& kubectl create secret generic node2-key --from-file ./nodes/node2/pwd/password.txt \
+&& kubectl create secret generic node2-keystore --from-file ./nodes/node2/keystore/node2.json
 ```
 
 ## Destroy Script:

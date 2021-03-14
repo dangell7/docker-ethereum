@@ -208,3 +208,69 @@
 17:31:24.833621 table@remove removed @35
 17:31:32.292402 db@close closing
 17:31:32.329972 db@close done T·37.5577ms
+=============== Mar 6, 2021 (UTC) ===============
+04:07:52.778547 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+04:07:52.788783 version@stat F·[0 1] S·98KiB[0B 98KiB] Sc·[0.00 0.00]
+04:07:52.789840 db@open opening
+04:07:52.790979 journal@recovery F·1
+04:07:52.794074 journal@recovery recovering @46
+04:07:52.816009 memdb@flush created L0@49 N·13 S·741B "H\xa1\x9f..\xbf\x88\xc8,v1905":"unc..own,v1902"
+04:07:52.832486 version@stat F·[1 1] S·99KiB[741B 98KiB] Sc·[0.25 0.00]
+04:07:52.915991 db@janitor F·5 G·1
+04:07:52.930727 db@janitor removing table-45
+04:07:52.946117 db@open done T·155.337354ms
+=============== Mar 6, 2021 (UTC) ===============
+04:08:33.813728 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+04:08:33.825068 version@stat F·[1 1] S·99KiB[741B 98KiB] Sc·[0.25 0.00]
+04:08:33.825635 db@open opening
+04:08:33.826668 journal@recovery F·1
+04:08:33.829304 journal@recovery recovering @50
+04:08:33.855945 memdb@flush created L0@52 N·1 S·208B "unc..own,v1916":"unc..own,v1916"
+04:08:33.869253 version@stat F·[2 1] S·99KiB[949B 98KiB] Sc·[0.50 0.00]
+04:08:33.894173 db@janitor F·5 G·0
+04:08:33.895466 db@open done T·68.783808ms
+04:08:48.926214 db@close closing
+04:08:48.937370 db@close done T·11.152923ms
+=============== Mar 13, 2021 (UTC) ===============
+23:37:53.837904 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+23:37:53.857128 version@stat F·[2 1] S·99KiB[949B 98KiB] Sc·[0.50 0.00]
+23:37:53.858532 db@open opening
+23:37:53.860658 journal@recovery F·1
+23:37:53.868632 journal@recovery recovering @53
+23:37:53.891865 memdb@flush created L0@55 N·31 S·1KiB "Hy\xbd..9\xdd\xd3,v1939":"unc..own,v1918"
+23:37:53.929803 version@stat F·[3 1] S·100KiB[2KiB 98KiB] Sc·[0.75 0.00]
+23:37:53.993906 db@janitor F·6 G·0
+23:37:53.995478 db@open done T·135.791528ms
+23:43:59.315354 db@close closing
+23:43:59.322490 db@close done T·7.364389ms
+=============== Mar 13, 2021 (UTC) ===============
+23:44:02.583465 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+23:44:02.604576 version@stat F·[3 1] S·100KiB[2KiB 98KiB] Sc·[0.75 0.00]
+23:44:02.606201 db@open opening
+23:44:02.608274 journal@recovery F·1
+23:44:02.618195 journal@recovery recovering @56
+23:44:02.868941 memdb@flush created L0@58 N·661 S·32KiB "H\x00\x17..k\xb6\x9b,v2475":"unc..own,v1950"
+23:44:02.898580 version@stat F·[4 1] S·132KiB[34KiB 98KiB] Sc·[1.00 0.00]
+23:44:02.989273 db@janitor F·7 G·0
+23:44:02.992051 db@open done T·384.32464ms
+23:44:02.992439 table@compaction L0·4 -> L1·1 S·132KiB Q·2611
+23:44:03.476517 table@build created L1@61 N·2000 S·125KiB "\x02d\xfc..\x19Ba,v432":"\xfe\x88\xcf..H\xef\xcc,v365"
+23:44:03.479149 version@stat F·[0 1] S·125KiB[0B 125KiB] Sc·[0.00 0.00]
+23:44:03.481665 table@compaction committed F-4 S-7KiB Ke·0 D·244 T·484.52587ms
+23:44:03.484903 table@remove removed @55
+23:44:03.489203 table@remove removed @52
+23:44:03.491764 table@remove removed @49
+23:44:03.494739 table@remove removed @48
+23:45:40.619990 db@close closing
+23:45:40.626601 db@close done T·6.606453ms
+=============== Mar 14, 2021 (UTC) ===============
+02:11:44.534669 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+02:11:44.555527 version@stat F·[0 1] S·125KiB[0B 125KiB] Sc·[0.00 0.00]
+02:11:44.558360 db@open opening
+02:11:44.560857 journal@recovery F·1
+02:11:44.586230 journal@recovery recovering @59
+02:11:44.805101 memdb@flush created L0@62 N·175 S·7KiB "H\x04\xbb..\xb7\xca^,v2741":"unc..own,v2612"
+02:11:44.815904 version@stat F·[1 1] S·132KiB[7KiB 125KiB] Sc·[0.25 0.00]
+02:11:44.905748 db@janitor F·5 G·1
+02:11:44.907219 db@janitor removing table-58
+02:11:44.923118 db@open done T·362.9831ms

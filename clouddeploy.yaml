@@ -61,13 +61,13 @@ spec:
     spec:
       containers:
       - name: node1-deployment
-        image: gcr.io/gambit-prod-ha/node1
-        # env:
-        #     - name: "NODE1_PWD"
-        #       value: "/home/pwd/password.txt"
-        # volumeMounts:
-            # - name: "node1-ethsdk"
-            #   mountPath: "/home/pwd"
+        image: gcr.io/utils-harpangell/node1
+        env:
+            - name: "NODE1_PWD"
+              value: "/home/pwd/password.txt"
+        volumeMounts:
+            - name: "node1-ethsdk"
+              mountPath: "/home/pwd"
             # - name: node11-pv
             #   mountPath: /home/ethereum1/geth
         imagePullPolicy: Always
@@ -84,22 +84,22 @@ spec:
           "--rpccorsdomain", "*",
           "--rpcvhosts", "*",
           "--rpcapi", "eth,web3,personal,net",
-          "--ws",
-          "--wsaddr", "0.0.0.0",
-          "--wsapi", "eth,web3,personal,net",
-          "--wsorigins", "*",
+          # "--ws",
+          # "--wsaddr", "localhost",
+          # "--wsapi", "eth,web3,personal,net",
+          # "--wsorigins", "*",
           "--networkid", "32414",
-          "--gasprice", "0",
+          "--miner.gasprice", "0",
           "--unlock", "0",
           "--password", "pwd/password.txt",
           "--mine",
           "--allow-insecure-unlock",
           "--nodiscover"
         ]
-      # volumes:
-        # - name: "node1-ethsdk"
-        #   secret:
-        #     secretName: "node1-key"
+      volumes:
+        - name: "node1-ethsdk"
+          secret:
+            secretName: "node1-key"
         # - name: node11-pv
         #   persistentVolumeClaim:
         #     claimName: node11-claim
@@ -158,13 +158,13 @@ spec:
     spec:
       containers:
       - name: node2-deployment
-        image: gcr.io/gambit-prod-ha/node2
-        # env:
-        #     - name: "NODE2_PWD"
-        #       value: "/home/pwd/password.txt"
-        # volumeMounts:
-            # - name: "node2-ethsdk"
-            #   mountPath: /home/pwd
+        image: gcr.io/utils-harpangell/node2
+        env:
+            - name: "NODE2_PWD"
+              value: "/home/pwd/password.txt"
+        volumeMounts:
+            - name: "node2-ethsdk"
+              mountPath: /home/pwd
             # - name: node22-pv
             #   mountPath: /home/ethereum2/geth
         imagePullPolicy: Always
@@ -181,22 +181,22 @@ spec:
           "--rpccorsdomain", "*",
           "--rpcvhosts", "*",
           "--rpcapi", "eth,web3,personal,net",
-          "--ws",
-          "--wsaddr", "0.0.0.0",
-          "--wsapi", "eth,web3,personal,net",
-          "--wsorigins", "*",
+          # "--ws",
+          # "--wsaddr", "localhost",
+          # "--wsapi", "eth,web3,personal,net",
+          # "--wsorigins", "*",
           "--networkid", "32414",
-          "--gasprice", "0",
+          "--miner.gasprice", "0",
           "--unlock", "0",
           "--password", "pwd/password.txt",
           "--mine",
           "--allow-insecure-unlock",
           "--nodiscover"
         ]
-      # volumes:
-        # - name: "node2-ethsdk"
-        #   secret:
-        #     secretName: "node2-key"
+      volumes:
+        - name: "node2-ethsdk"
+          secret:
+            secretName: "node2-key"
         # - name: node22-pv
         #   persistentVolumeClaim:
         #     claimName: node22-claim
@@ -223,7 +223,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: ethnet-deployment
-#         image: gcr.io/gambit-prod-ha/ethnet
+#         image: gcr.io/utils-harpangell/ethnet
 #         imagePullPolicy: Always
 # ---
 # apiVersion: v1
@@ -262,7 +262,7 @@ spec:
 #     spec:
 #       containers:
 #       - name: dashboard-deployment
-#         image: gcr.io/gambit-prod-ha/dashboard
+#         image: gcr.io/utils-harpangell/dashboard
 #         imagePullPolicy: Always
 #         ports:
 #         - containerPort: 3000

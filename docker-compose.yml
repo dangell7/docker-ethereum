@@ -55,21 +55,21 @@ services:
       --miner.gasprice 0
       --password pwd/password.txt
       --mine --allow-insecure-unlock --nodiscover
-  # dashboard:
-  #   build:
-  #     context: ./monitoring/dashboard
-  #     dockerfile: Dockerfile
-  #   container_name: dashboard
-  #   environment:
-  #     - WS_SECRET=eth-net-stats-secret
-  #   ports:
-  #     - "3000:3000"
-  # ethnet:
-  #   build:
-  #     context: ./monitoring/api
-  #     dockerfile: Dockerfile
-  #   links:
-  #     - dashboard
-  #   container_name: ethnet
-  #   volumes:
-  #     - ./monitoring/api/app.json:/home/ethnetintel/eth-net-intelligence-api/app.json
+  dashboard:
+    build:
+      context: ./monitoring/dashboard
+      dockerfile: Dockerfile
+    container_name: dashboard
+    environment:
+      - WS_SECRET=eth-net-stats-secret
+    ports:
+      - "3000:3000"
+  ethnet:
+    build:
+      context: ./monitoring/api
+      dockerfile: Dockerfile
+    links:
+      - dashboard
+    container_name: ethnet
+    volumes:
+      - ./monitoring/api/app.json:/home/ethnetintel/eth-net-intelligence-api/app.json

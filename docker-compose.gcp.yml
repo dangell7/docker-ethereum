@@ -11,7 +11,7 @@ services:
    image: gcr.io/utils-harpangell/node1
  node2:
    image: gcr.io/utils-harpangell/node2
- # dashboard:
- #   image: gcr.io/utils-harpangell/dashboard
- # ethnet:
- #   image: gcr.io/utils-harpangell/ethnet
+ dashboard:
+   image: gcr.io/utils-harpangell/dashboard
+ ethnet:
+   image: gcr.io/utils-harpangell/ethnet
